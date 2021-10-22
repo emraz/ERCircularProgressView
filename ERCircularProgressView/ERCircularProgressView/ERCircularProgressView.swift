@@ -56,8 +56,7 @@ class ERCircularProgressView: UIView {
     public var foregroundLineColor: UIColor = .red
     public var lineFinishColor: UIColor = .green
     
-    
-    public func setProgress(to progressConstant: Double, withAnimation: Bool) {
+    public func setProgress(to progressConstant: Double) {
         
         var progress: Double {
             get {
@@ -67,33 +66,12 @@ class ERCircularProgressView: UIView {
             }
         }
         
-        let animationDuration = wholeCircleAnimationDuration * progress
-        
-        foregroundLayer.strokeEnd = CGFloat(progress)
-        
-        if withAnimation {
-            let animation = CABasicAnimation(keyPath: "strokeEnd")
-            animation.fromValue = 0
-            animation.toValue = progress
-            animation.duration = animationDuration
-            foregroundLayer.add(animation, forKey: "foregroundAnimation")
-        }
-        
-        var currentTime:Double = 0
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { (timer) in
-            if currentTime >= animationDuration {
-                timer.invalidate()
-            } else {
-                currentTime += 0.05
-                let percent = currentTime/2 * 100
-                self.label.text = "\(Int(progress * percent))%"
-                self.setForegroundLayerColorForSafePercent()
-                self.configLabel()
-            }
-        }
-        timer.fire()
+        foregroundLayer.strokeEnd = CGFloat(progressConstant)
+        self.label.text = "\(Int(progressConstant * 100))%"
+        self.setForegroundLayerColorForSafePercent()
+        self.configLabel()
     }
-    
+
     //MARK: Private
     private var initialText = "0%"
     private var label = UILabel()
@@ -131,7 +109,7 @@ class ERCircularProgressView: UIView {
         
         let path = UIBezierPath(arcCenter: pathCenter, radius: self.radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
         
-        foregroundLayer.lineCap = CAShapeLayerLineCap.square
+        foregroundLayer.lineCap = CAShapeLayerLineCap.butt
         foregroundLayer.path = path.cgPath
         foregroundLayer.lineWidth = foregroundLineWidth
         foregroundLayer.fillColor = UIColor.clear.cgColor

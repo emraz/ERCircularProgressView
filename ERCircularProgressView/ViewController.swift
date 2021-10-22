@@ -19,15 +19,15 @@ class ViewController: UIViewController {
         circularProgressView.foregroundLineColor = .blue
         circularProgressView.lineFinishColor = .red
         circularProgressView.backgroundLineColor = .gray
-        circularProgressView.foregroundLineWidth = 20
-        circularProgressView.backgroundLineWidth = 20
+        circularProgressView.foregroundLineWidth = 30
+        circularProgressView.backgroundLineWidth = 30
         //circularProgressView.safePercent = 100
         //circularProgressView.labelTextColor = UIColor.green
         //circularProgressView.labelFont = UIFont.boldSystemFont(ofSize: 25)
     }
     
     @objc func handleTap() {
-        circularProgressView.setProgress(to: 1, withAnimation: true)
+        circularProgressView.setProgress(to: 1)
     }
 }
 
